@@ -3,11 +3,17 @@
     "dev": "parcel src/index.html --hmr-port=1235",
     "build": "parcel build src/index.html",
     "server": "http-server dist -p 1234",
-    "prebuild": "rm -rf dist"
+    "prebuild": "rm -rf dist",
+    "lint": "eslint --ext .js --ignore-path .gitignore .",
+    "lint:fix": "yarn lint --fix"
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "http-server": "^0.11.1",
-    "parcel-bundler": "^1.12.3"
+    "parcel-bundler": "^1.12.3",
+    "prettier": "^1.17.0"
   },
   "dependencies": {
     "hyperapp": "beta"

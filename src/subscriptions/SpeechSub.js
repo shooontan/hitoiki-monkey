@@ -1,24 +1,24 @@
-import SpeechRecognition from "../libs/SpeechRecognition";
-import handler from "./Handler";
-import * as actions from "../actions/speech";
+import SpeechRecognition from '~/libs/SpeechRecognition';
+import handler from '~/subscriptions/Handler';
+import * as actions from '~/actions/speech';
 
 const SpeechEffect = (props, dispatch) => {
   const speechstartHandle = handler.addListener(
     SpeechRecognition,
-    "speechstart",
+    'speechstart',
     () => {
-      console.log("onspeechstart");
-      dispatch(props.updateStatus, "認識開始");
+      console.log('onspeechstart');
+      dispatch(props.updateStatus, '認識開始');
     }
   );
 
   const resultHandle = handler.addListener(
     SpeechRecognition,
-    "result",
+    'result',
     event => {
-      console.log("onresult");
+      console.log('onresult');
       const { results, resultIndex } = event;
-      dispatch(props.updateStatus, "認識中");
+      dispatch(props.updateStatus, '認識中');
       for (let index = resultIndex; index < results.length; index++) {
         if (results[index].isFinal) {
           dispatch(props.addTranscript, results[index][0].transcript);
@@ -33,14 +33,14 @@ const SpeechEffect = (props, dispatch) => {
     }
   );
 
-  const endHandle = handler.addListener(SpeechRecognition, "end", () => {
-    console.log("onend");
-    dispatch(props.updateStatus, "認識完了");
-    dispatch(props.updateTranscript, "");
+  const endHandle = handler.addListener(SpeechRecognition, 'end', () => {
+    console.log('onend');
+    dispatch(props.updateStatus, '認識完了');
+    dispatch(props.updateTranscript, '');
     SpeechRecognition.start();
   });
 
-  const errorHandle = handler.addListener(SpeechRecognition, "error", error => {
+  const errorHandle = handler.addListener(SpeechRecognition, 'error', error => {
     const status = `onerror: ${error.error}`;
     console.log(error);
     dispatch(props.updateStatus, status);
@@ -59,5 +59,5 @@ const SpeechEffect = (props, dispatch) => {
 const Speech = props => [SpeechEffect, props];
 
 export const SpeechSub = Speech({
-  ...actions
+  ...actions,
 });

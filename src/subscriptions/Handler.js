@@ -9,7 +9,7 @@ class Handler {
       element,
       event,
       handler,
-      capture
+      capture,
     });
     return handler;
   }

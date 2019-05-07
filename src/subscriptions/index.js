@@ -1,3 +1,3 @@
-import { SpeechSub } from "./SpeechSub";
+import { SpeechSub } from '~/subscriptions/SpeechSub';
 
 export default state => [state.started && SpeechSub];

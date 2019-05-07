@@ -1,6 +1,6 @@
-import { h, app } from "hyperapp";
-import * as actions from "./actions";
-import subscriptions from "./subscriptions";
+import { h, app } from 'hyperapp';
+import * as actions from '~/actions';
+import subscriptions from '~/subscriptions';
 
 app({
   init: actions.Init,
@@ -9,7 +9,7 @@ app({
       <button
         onclick={state.started ? actions.Speech.onStop : actions.Speech.onStart}
       >
-        {state.started ? "ストップ" : "スタート"}
+        {state.started ? 'ストップ' : 'スタート'}
       </button>
       <p>{state.status}</p>
       <p>{state.transcript}</p>
@@ -20,6 +20,6 @@ app({
       </ul>
     </div>
   ),
-  node: document.getElementById("app"),
-  subscriptions
+  node: document.getElementById('app'),
+  subscriptions,
 });

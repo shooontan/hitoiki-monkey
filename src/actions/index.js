@@ -1,10 +1,10 @@
-import * as Speech from "./speech";
+import * as Speech from '~/actions/speech';
 
 export { Speech };
 
 export const Init = () => ({
-  status: "",
+  status: '',
   started: false,
-  transcript: "",
-  transcripts: []
+  transcript: '',
+  transcripts: [],
 });

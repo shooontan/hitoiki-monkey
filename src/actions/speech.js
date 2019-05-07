@@ -1,4 +1,4 @@
-import SpeechRecognition from "../libs/SpeechRecognition";
+import SpeechRecognition from '~/libs/SpeechRecognition';
 
 export const onStart = state => {
   SpeechRecognition.start();
@@ -12,21 +12,21 @@ export const onStop = state => {
 
 export const updateTranscript = (state, transcript) => ({
   ...state,
-  transcript
+  transcript,
 });
 
 export const addTranscript = (state, transcript) => ({
   ...state,
-  transcripts: [...state.transcripts, transcript]
+  transcripts: [...state.transcripts, transcript],
 });
 
 export const updateStatus = (state, status) => ({
   ...state,
-  status
+  status,
 });
 
 export const stopSpeechRecognition = state => ({
   ...state,
-  transcript: "",
-  transcripts: [...state.transcripts, state.transcript]
+  transcript: '',
+  transcripts: [...state.transcripts, state.transcript],
 });
