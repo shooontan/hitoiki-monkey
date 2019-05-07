@@ -20,6 +20,6 @@ app({
       </ul>
     </div>
   ),
-  container: document.getElementById("app"),
+  node: document.getElementById("app"),
   subscriptions
 });

@@ -7,6 +7,6 @@
     "parcel-bundler": "^1.12.3"
   },
   "dependencies": {
-    "hyperapp": "alpha"
+    "hyperapp": "beta"
   }
 }
