@@ -4,7 +4,7 @@ services:
   app:
     image: node:10.15-stretch-slim
     volumes:
-      - ./app:/app
+      - .:/app
       - yarn-cache:/usr/local/share/.cache/yarn
     ports:
       - 1234:1234
