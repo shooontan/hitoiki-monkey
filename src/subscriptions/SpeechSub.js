@@ -3,6 +3,18 @@ import handler from '~/subscriptions/Handler';
 import * as actions from '~/actions/speech';
 
 const SpeechEffect = (props, dispatch) => {
+  const startHandle = handler.addListener(SpeechRecognition, 'start', () => {
+    console.log('onstart');
+  });
+
+  const soundstartHandler = handler.addListener(
+    SpeechRecognition,
+    'soundstart',
+    () => {
+      console.log('onsoundstart');
+    }
+  );
+
   const speechstartHandle = handler.addListener(
     SpeechRecognition,
     'speechstart',
@@ -33,6 +45,22 @@ const SpeechEffect = (props, dispatch) => {
     }
   );
 
+  const speechendHandle = handler.addListener(
+    SpeechRecognition,
+    'speechend',
+    () => {
+      console.log('onspeechend');
+    }
+  );
+
+  const soundendHandler = handler.addListener(
+    SpeechRecognition,
+    'soundend',
+    () => {
+      console.log('onsoundend');
+    }
+  );
+
   const endHandle = handler.addListener(SpeechRecognition, 'end', () => {
     console.log('onend');
     dispatch(props.updateStatus, '認識完了');
@@ -47,8 +75,12 @@ const SpeechEffect = (props, dispatch) => {
   });
 
   return () => {
+    handler.removeListener(startHandle);
+    handler.removeListener(soundstartHandler);
     handler.removeListener(speechstartHandle);
     handler.removeListener(resultHandle);
+    handler.removeListener(speechendHandle);
+    handler.removeListener(soundendHandler);
     handler.removeListener(endHandle);
     handler.removeListener(errorHandle);
 
