@@ -1,5 +1,15 @@
 @import './button.scss';
 
 html {
-  background: #eee
+  background: linear-gradient(-135deg, #7affce, #f7b6ff) fixed;
+}
+
+body {
+  margin: 0;
+}
+
+#app {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
