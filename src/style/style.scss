@@ -1,5 +1,9 @@
 @import './button.scss';
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   background: linear-gradient(-135deg, #7affce, #f7b6ff) fixed;
 }
