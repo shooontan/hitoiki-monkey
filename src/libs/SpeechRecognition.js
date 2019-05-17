@@ -1,6 +1,7 @@
-window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+window.SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
 
-const recognition = new webkitSpeechRecognition();
+const recognition = new SpeechRecognition();
 recognition.lang = 'ja';
 recognition.interimResults = true;
 recognition.continuous = true;

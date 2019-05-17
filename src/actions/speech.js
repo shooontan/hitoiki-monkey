@@ -1,7 +1,11 @@
 import SpeechRecognition from '~/libs/SpeechRecognition';
 
 export const onStart = state => {
-  SpeechRecognition.start();
+  try {
+    SpeechRecognition.start();
+  } catch (__) {
+    // TODO: error handle
+  }
   return { ...state, started: true };
 };
 
@@ -10,10 +14,15 @@ export const onStop = state => {
   return { ...state, started: false };
 };
 
-export const updateTranscript = (state, transcript) => ({
-  ...state,
-  transcript,
-});
+export const updateTranscript = (state, transcript) => {
+  const cloneTranscripts = [...state.transcripts];
+  const lastTranscript = cloneTranscripts.pop();
+
+  return {
+    ...state,
+    transcripts: [...cloneTranscripts, transcript],
+  };
+};
 
 export const addTranscript = (state, transcript) => ({
   ...state,
@@ -25,8 +34,19 @@ export const updateStatus = (state, status) => ({
   status,
 });
 
-export const stopSpeechRecognition = state => ({
-  ...state,
-  transcript: '',
-  transcripts: [...state.transcripts, state.transcript],
-});
+export const stopSpeechRecognition = state => {
+  const cloneTranscripts = [...state.transcripts];
+  const lastTranscript = cloneTranscripts.pop();
+  const nextTranscripts = [
+    ...cloneTranscripts,
+    {
+      ...lastTranscript,
+      isFinal: true,
+    },
+  ];
+
+  return {
+    ...state,
+    transcripts: nextTranscripts,
+  };
+};

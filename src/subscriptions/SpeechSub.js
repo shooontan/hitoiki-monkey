@@ -5,6 +5,9 @@ import * as actions from '~/actions/speech';
 const SpeechEffect = (props, dispatch) => {
   const startHandle = handler.addListener(SpeechRecognition, 'start', () => {
     console.log('onstart');
+    dispatch(props.addTranscript, {
+      text: '',
+    });
   });
 
   const soundstartHandler = handler.addListener(
@@ -32,14 +35,14 @@ const SpeechEffect = (props, dispatch) => {
       const { results, resultIndex } = event;
       dispatch(props.updateStatus, '認識中');
       for (let index = resultIndex; index < results.length; index++) {
-        if (results[index].isFinal) {
-          dispatch(props.addTranscript, results[index][0].transcript);
+        const result = results[index];
+        dispatch(props.updateTranscript, {
+          text: result[0].transcript,
+          isFinal: result.isFinal,
+        });
+
+        if (result.isFinal) {
           SpeechRecognition.stop();
-        } else {
-          dispatch(
-            props.updateTranscript,
-            `${results[index][0].transcript} ...`
-          );
         }
       }
     }
@@ -64,7 +67,6 @@ const SpeechEffect = (props, dispatch) => {
   const endHandle = handler.addListener(SpeechRecognition, 'end', () => {
     console.log('onend');
     dispatch(props.updateStatus, '認識完了');
-    dispatch(props.updateTranscript, '');
     SpeechRecognition.start();
   });
 

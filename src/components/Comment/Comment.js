@@ -1,5 +1,7 @@
 import { h } from 'hyperapp';
 
+import DotDot from '~/components/DotDot';
+
 export default function Comment(props) {
   const { status, transcript, transcripts } = props;
 
@@ -11,13 +13,17 @@ export default function Comment(props) {
 
   return (
     <div class="comment">
-      <p>{status}</p>
-      <p>{transcript}</p>
       <ul id="comment-list" class="comment-list">
-        {transcripts.map(_transcript => (
-          <li class="comment-list-item">
+        {transcripts.map((transcript, index) => (
+          <li
+            class={{
+              'comment-list-item': true,
+              none: !transcript.text,
+            }}
+          >
             <div>
-              <span>{_transcript}</span>
+              <span>{transcript.text}</span>
+              {!transcript.isFinal && <DotDot />}
             </div>
           </li>
         ))}
