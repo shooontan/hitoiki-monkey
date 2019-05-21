@@ -1,3 +1,38 @@
+$speed-meter-inner-height: 400px;
+
+
 .speed-meter {
+  display: flex;
+  align-items: center;
   flex: 1;
+  height: 100%;
+
+  &-inner {
+    position: relative;
+    width: 100px;
+    height: $speed-meter-inner-height;
+    border: 4px solid #333;
+    border-radius: 8px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: pink;
+      transition: 1.2s cubic-bezier(0, 0, 0.2, 1);
+      z-index: -1;
+    }
+  }
+
+  &-item {
+    height: $speed-meter-inner-height / 20;
+    border-bottom: 2px solid #888;
+
+    &:last-child {
+      border: none;
+    }
+  }
 }

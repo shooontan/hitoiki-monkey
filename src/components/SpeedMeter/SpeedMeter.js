@@ -1,5 +1,17 @@
 import { h } from 'hyperapp';
 
-export default function SpeedMeter() {
-  return <div class="speed-meter" />;
+const MeterItemCount = 20;
+
+export default function SpeedMeter(props) {
+  const { speed } = props;
+
+  const MeterItems = [...new Array(MeterItemCount)].map(() => (
+    <div class="speed-meter-item" />
+  ));
+
+  return (
+    <div class="speed-meter">
+      <div class="speed-meter-inner">{MeterItems}</div>
+    </div>
+  );
 }
