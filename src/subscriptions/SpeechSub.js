@@ -1,7 +1,6 @@
 import SpeechRecognition from '~/libs/SpeechRecognition';
 import handler from '~/subscriptions/Handler';
 import * as actions from '~/actions/speech';
-import kuromoji from '~/libs/kuromoji';
 
 const SpeechEffect = (props, dispatch) => {
   const startHandle = handler.addListener(SpeechRecognition, 'start', () => {

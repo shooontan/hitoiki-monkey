@@ -29,6 +29,12 @@
     }
   }
 
+  &-not-support {
+    color: #fafafa;
+    font-size: 30px;
+    text-align: center;
+  }
+
   & .none {
     display: none;
   }

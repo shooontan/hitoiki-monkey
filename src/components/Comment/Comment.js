@@ -3,12 +3,23 @@ import { h } from 'hyperapp';
 import DotDot from '~/components/DotDot';
 
 export default function Comment(props) {
-  const { dictLoading, status, transcript, transcripts } = props;
+  const { enable, dictLoading, status, transcript, transcripts } = props;
 
   // TODO
   const listElm = document.getElementById('comment-list');
   if (listElm) {
     listElm.scrollTop = listElm.scrollHeight;
+  }
+
+  if (!enable) {
+    return (
+      <div class="comment">
+        <div class="comment-not-support">
+          <p>Your browser is not supported.</p>
+          <p>Please use Chrome browser.</p>
+        </div>
+      </div>
+    );
   }
 
   if (dictLoading) {

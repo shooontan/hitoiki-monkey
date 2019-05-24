@@ -1,9 +1,13 @@
 window.SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 
-const recognition = new SpeechRecognition();
-recognition.lang = 'ja';
-recognition.interimResults = true;
-recognition.continuous = true;
+let recognition = undefined;
+
+try {
+  recognition = new SpeechRecognition();
+  recognition.lang = 'ja';
+  recognition.interimResults = true;
+  recognition.continuous = true;
+} catch (__) {}
 
 export default recognition;
