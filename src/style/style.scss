@@ -5,11 +5,13 @@
 }
 
 html {
+  height: 100%;
   background: linear-gradient(-135deg, #7affce, #f7b6ff) fixed;
 }
 
 body {
   margin: 0;
+  height: 100%;
   background-image:
     linear-gradient(transparent 95%, rgba(0, 0, 0, .05) 5% ),
     linear-gradient( 90deg, transparent 95%, rgba(0, 0, 0, .05) 5% );
