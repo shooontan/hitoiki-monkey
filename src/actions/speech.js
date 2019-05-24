@@ -1,4 +1,5 @@
 import SpeechRecognition from '~/libs/SpeechRecognition';
+import kuromoji from '~/libs/kuromoji';
 
 export const onStart = state => {
   try {
@@ -12,6 +13,22 @@ export const onStart = state => {
 export const onStop = state => {
   SpeechRecognition.stop();
   return { ...state, started: false };
+};
+
+export const tokenizeUpdateTranscript = (state, transcript) => {
+  const ipadics = kuromoji.tokenizer.tokenize(transcript.text || '');
+
+  const readingLength = ipadics.reduce((pre, now) => {
+    const nowLength = now.reading
+      ? now.reading.length
+      : now.surface_form.length;
+    return pre + nowLength;
+  }, 0);
+
+  return updateTranscript(state, {
+    ...transcript,
+    reading: readingLength,
+  });
 };
 
 export const updateTranscript = (state, transcript) => {

@@ -3,7 +3,10 @@
     "dev": "parcel src/index.html --hmr-port=1235",
     "build": "parcel build src/index.html",
     "server": "http-server dist -p 1234",
+    "predev": "yarn copy:dict",
     "prebuild": "rm -rf dist",
+    "postbuild": "yarn copy:dict",
+    "copy:dict": "mkdir -p dist/dict && cp -r node_modules/kuromoji/dict/* dist/dict",
     "lint": "eslint --ext .js --ignore-path .gitignore .",
     "lint:fix": "yarn lint --fix"
   },
@@ -17,6 +20,7 @@
     "sass": "^1.20.1"
   },
   "dependencies": {
-    "hyperapp": "beta"
+    "hyperapp": "beta",
+    "kuromoji": "^0.1.2"
   }
 }

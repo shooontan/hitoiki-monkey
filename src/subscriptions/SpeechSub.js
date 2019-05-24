@@ -1,6 +1,7 @@
 import SpeechRecognition from '~/libs/SpeechRecognition';
 import handler from '~/subscriptions/Handler';
 import * as actions from '~/actions/speech';
+import kuromoji from '~/libs/kuromoji';
 
 const SpeechEffect = (props, dispatch) => {
   const startHandle = handler.addListener(SpeechRecognition, 'start', () => {
@@ -36,9 +37,10 @@ const SpeechEffect = (props, dispatch) => {
       dispatch(props.updateStatus, '認識中');
       for (let index = resultIndex; index < results.length; index++) {
         const result = results[index];
-        dispatch(props.updateTranscript, {
+        dispatch(props.tokenizeUpdateTranscript, {
           text: result[0].transcript,
           isFinal: result.isFinal,
+          ts: event.timeStamp,
         });
 
         if (result.isFinal) {
