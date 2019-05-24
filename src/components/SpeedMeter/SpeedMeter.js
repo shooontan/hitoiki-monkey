@@ -11,7 +11,13 @@ export default function SpeedMeter(props) {
 
   return (
     <div class="speed-meter">
-      <div class="speed-meter-inner">{MeterItems}</div>
+      <div class="speed-meter-inner">
+        {MeterItems}
+        <div
+          class="speed-meter-bar"
+          style={{ height: `${props.speed * 100}%` }}
+        />
+      </div>
     </div>
   );
 }

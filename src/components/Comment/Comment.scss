@@ -1,6 +1,12 @@
 .comment {
   flex: 1;
 
+  &-loading {
+    color: #fafafa;
+    font-size: 30px;
+    text-align: center;
+  }
+
   &-list {
     margin: 0;
     padding: 0;

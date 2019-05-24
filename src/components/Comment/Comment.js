@@ -3,12 +3,23 @@ import { h } from 'hyperapp';
 import DotDot from '~/components/DotDot';
 
 export default function Comment(props) {
-  const { status, transcript, transcripts } = props;
+  const { dictLoading, status, transcript, transcripts } = props;
 
   // TODO
   const listElm = document.getElementById('comment-list');
   if (listElm) {
     listElm.scrollTop = listElm.scrollHeight;
+  }
+
+  if (dictLoading) {
+    return (
+      <div class="comment">
+        <div class="comment-loading">
+          Now Loading
+          <DotDot />
+        </div>
+      </div>
+    );
   }
 
   return (
