@@ -1,17 +1,16 @@
-import SpeechRecognition from '~/libs/SpeechRecognition';
 import kuromoji from '~/libs/kuromoji';
 
-export const onStart = state => {
+export const onStart = (state, startAction = () => {}) => {
   try {
-    SpeechRecognition.start();
+    startAction();
   } catch (__) {
     // TODO: error handle
   }
   return { ...state, started: true, calc: true };
 };
 
-export const onStop = state => {
-  SpeechRecognition.stop();
+export const onStop = (state, stopAction = () => {}) => {
+  stopAction();
   return { ...state, started: false, calc: false };
 };
 
