@@ -6,7 +6,7 @@ import subscriptions from '~/subscriptions';
 import './style/style.scss';
 
 app({
-  init: actions.Init,
+  init: actions.Init.Init,
   view: view,
   node: document.getElementById('app'),
   subscriptions,

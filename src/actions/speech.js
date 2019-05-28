@@ -14,6 +14,7 @@ export const onStop = (state, stopAction = () => {}) => {
   return { ...state, started: false, calc: false };
 };
 
+// TODO: test
 export const tokenizeUpdateTranscript = (state, transcript) => {
   const ipadics = kuromoji.tokenizer.tokenize(transcript.text || '');
 
@@ -101,7 +102,7 @@ export const calcSpeed = state => {
   });
 
   const speed = targetTranscripts.reduce((pre, now) => {
-    return pre + now.reading;
+    return pre + (now.reading || 0);
   }, 0);
 
   return {
