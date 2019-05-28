@@ -11,13 +11,17 @@
     "postbuild": "yarn copy:dict",
     "copy:dict": "mkdir -p dist/dict && cp -r node_modules/kuromoji/dict/* dist/dict",
     "lint": "eslint --ext .js --ignore-path .gitignore .",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "yarn lint --fix",
+    "test": "jest --coverage "
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.0.1",
     "http-server": "^0.11.1",
+    "jest": "^24.8.0",
     "parcel-bundler": "^1.12.3",
     "prettier": "^1.17.0",
     "sass": "^1.20.1"
