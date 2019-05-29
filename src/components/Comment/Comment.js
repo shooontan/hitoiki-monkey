@@ -1,9 +1,16 @@
 import { h } from 'hyperapp';
-
+import * as errorType from '~/constants/errorType';
 import DotDot from '~/components/DotDot';
 
 export default function Comment(props) {
-  const { enable, dictLoading, status, transcript, transcripts } = props;
+  const {
+    errorType,
+    enable,
+    dictLoading,
+    status,
+    transcript,
+    transcripts,
+  } = props;
 
   // TODO
   const listElm = document.getElementById('comment-list');
@@ -17,6 +24,21 @@ export default function Comment(props) {
         <div class="comment-not-support">
           <p>Your browser is not supported.</p>
           <p>Please use Chrome browser.</p>
+        </div>
+      </div>
+    );
+  }
+
+  console.log('====================================');
+  console.log(errorType);
+  console.log('====================================');
+
+  if (errorType === errorType.ERROR_NOT_ALLOWED) {
+    return (
+      <div class="comment">
+        <div class="comment-not-support">
+          <p>Your browser is not allowed SpeechRecognition API.</p>
+          <p>Please change SpeechRecognition API permission.</p>
         </div>
       </div>
     );

@@ -1,6 +1,7 @@
 import SpeechRecognition from '~/libs/SpeechRecognition';
 import handler from '~/subscriptions/Handler';
 import * as actions from '~/actions/speech';
+import * as errorType from '~/constants/errorType';
 
 const SpeechEffect = (props, dispatch) => {
   const startHandle = handler.addListener(SpeechRecognition, 'start', () => {
@@ -8,6 +9,7 @@ const SpeechEffect = (props, dispatch) => {
     dispatch(props.addTranscript, {
       text: '',
     });
+    // dispatch(props.updateError, undefined);
   });
 
   const soundstartHandler = handler.addListener(
@@ -74,6 +76,17 @@ const SpeechEffect = (props, dispatch) => {
   const errorHandle = handler.addListener(SpeechRecognition, 'error', error => {
     const status = `onerror: ${error.error}`;
     console.log(error);
+
+    switch (error.error) {
+      case errorType.ERROR_NETWORK:
+      case errorType.ERROR_NOT_ALLOWED: {
+        return dispatch(props.updateError, error.error);
+      }
+      default: {
+        return dispatch(props.updateError, undefined);
+      }
+    }
+
     dispatch(props.updateStatus, status);
   });
 

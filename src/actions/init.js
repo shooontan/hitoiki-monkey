@@ -6,4 +6,5 @@ export const Init = () => ({
   status: '',
   started: false,
   transcripts: [],
+  errorType: '',
 });

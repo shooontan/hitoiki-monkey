@@ -110,3 +110,8 @@ export const calcSpeed = state => {
     speed: speed / perLength,
   };
 };
+
+export const updateError = (state, errorType) => ({
+  ...state,
+  errorType,
+});
