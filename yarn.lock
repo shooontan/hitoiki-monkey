@@ -3579,10 +3579,10 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
 
-hyperapp@beta:
-  version "2.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/hyperapp/-/hyperapp-2.0.0-beta.6.tgz#0d807a5dfda46ef96a5c0e9623ef070c742d57c6"
-  integrity sha512-vq454BrtyRIYjB9BHjIgXf8rBV4pWjiRDiIxfBBttAYWefYgF2u6ZJVhBCBBTe3/4dR9xMT6EmJ1oRMjWTrc8A==
+hyperapp@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/hyperapp/-/hyperapp-2.0.3.tgz#15000a828fcd680ab04256a312e63b2caea99a4d"
+  integrity sha512-SiTeX3kYK8ggjNqAAnyi2QRUHRCZ87L35pn66LevbI+TLp1wSsruKd1BD6c82s5ve9L503/HwQtpdTA0f5Wk9w==
 
 iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4:
   version "0.4.24"
