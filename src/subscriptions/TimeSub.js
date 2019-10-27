@@ -1,6 +1,6 @@
 import * as actions from '~/actions';
 
-export const IntervalEffect = (props, dispatch) => {
+export const IntervalEffect = (dispatch, props) => {
   const id = setInterval(() => {
     dispatch(props.action);
   }, props.delay);

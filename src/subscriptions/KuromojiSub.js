@@ -1,12 +1,9 @@
 import * as actions from '~/actions';
 import kuromoji from '~/libs/kuromoji';
 
-export const KuromojiEffect = (props, dispatch) => {
-  dispatch(props.actions.loadingDict, true);
-
+export const KuromojiEffect = (dispatch, props) => {
   kuromoji.init().then(res => {
     dispatch(props.actions.fetchDict, true);
-    dispatch(props.actions.loadingDict, false);
   });
 
   return () => {};

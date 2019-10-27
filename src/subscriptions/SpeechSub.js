@@ -2,7 +2,7 @@ import SpeechRecognition from '~/libs/SpeechRecognition';
 import handler from '~/subscriptions/Handler';
 import * as actions from '~/actions/speech';
 
-const SpeechEffect = (props, dispatch) => {
+const SpeechEffect = (dispatch, props) => {
   const startHandle = handler.addListener(SpeechRecognition, 'start', () => {
     console.log('onstart');
     dispatch(props.addTranscript, {
