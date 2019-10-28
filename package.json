@@ -30,5 +30,8 @@
     "hyperapp": "2.0.3",
     "kuromoji": "^0.1.2",
     "ky": "^0.15.0"
-  }
+  },
+  "browserslist": [
+    "last 2 Chrome version"
+  ]
 }
