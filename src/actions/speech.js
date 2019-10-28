@@ -1,5 +1,3 @@
-import kuromoji from '~/libs/kuromoji';
-
 export const onStart = (state, startAction = () => {}) => {
   try {
     startAction();
@@ -16,19 +14,7 @@ export const onStop = (state, stopAction = () => {}) => {
 
 // TODO: test
 export const tokenizeUpdateTranscript = (state, transcript) => {
-  const ipadics = kuromoji.tokenizer.tokenize(transcript.text || '');
-
-  const readingLength = ipadics.reduce((pre, now) => {
-    const nowLength = now.reading
-      ? now.reading.length
-      : now.surface_form.length;
-    return pre + nowLength;
-  }, 0);
-
-  return updateTranscript(state, {
-    ...transcript,
-    reading: readingLength,
-  });
+  return { ...state };
 };
 
 export const updateTranscript = (state, transcript) => {
