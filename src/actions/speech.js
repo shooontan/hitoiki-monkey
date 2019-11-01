@@ -9,27 +9,32 @@ export const onStart = (state, startAction = () => {}) => {
 
 export const onStop = (state, stopAction = () => {}) => {
   stopAction();
-  return { ...state, started: false, calc: false };
+  return { ...state, started: false, calc: false, error: null };
 };
 
-// TODO: test
-export const tokenizeUpdateTranscript = (state, transcript) => {
-  return { ...state };
-};
+export const addTimelineItem = (state, type = 'speech') => ({
+  ...state,
+  timeline: [
+    ...state.timeline,
+    {
+      type: type,
+      text: '',
+      isFinal: false,
+    },
+  ],
+});
 
-export const updateTranscript = (state, transcript) => {
-  const cloneTranscripts = [...state.transcripts];
-  const lastTranscript = cloneTranscripts.pop();
-
+export const updateTimelineItem = (state, item) => {
+  const lastItem = state.timeline.pop() || {};
   return {
     ...state,
-    transcripts: [...cloneTranscripts, transcript],
+    timeline: [...state.timeline, { ...lastItem, ...item }],
   };
 };
 
-export const addTranscript = (state, transcript) => ({
+export const updateTimeline = (state, text) => ({
   ...state,
-  transcripts: [...state.transcripts, transcript],
+  timeline: [...state.timeline, text],
 });
 
 export const updateStatus = (state, status) => ({
@@ -37,22 +42,10 @@ export const updateStatus = (state, status) => ({
   status,
 });
 
-export const stopSpeechRecognition = state => {
-  const cloneTranscripts = [...state.transcripts];
-  const lastTranscript = cloneTranscripts.pop();
-  const nextTranscripts = [
-    ...cloneTranscripts,
-    {
-      ...lastTranscript,
-      isFinal: true,
-    },
-  ];
-
-  return {
-    ...state,
-    transcripts: nextTranscripts,
-  };
-};
+export const setError = (state, errorStatus) => ({
+  ...state,
+  error: errorStatus,
+});
 
 export const calcSpeed = state => {
   const isEmptyTs = state.transcripts[state.transcripts.length - 1]

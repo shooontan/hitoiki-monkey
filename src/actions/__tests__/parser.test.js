@@ -1,4 +1,4 @@
-import { fetchDict, loadingDict } from './parser';
+import { fetchDict, loadingDict } from '../parser';
 
 describe('parser actions', () => {
   test('fetchDict action', () => {

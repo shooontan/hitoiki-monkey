@@ -1,12 +1,13 @@
-import * as actions from './speech';
+import * as actions from '../speech';
+import { Init } from '../init';
+
+global.SpeechRecognition = true;
 
 describe('speech actions', () => {
   test('onStart action', () => {
-    const state = {
-      started: false,
-      calc: false,
-    };
+    const state = Init();
     const expected = {
+      ...state,
       started: true,
       calc: true,
     };
@@ -17,13 +18,12 @@ describe('speech actions', () => {
   });
 
   test('onStop action', () => {
-    const state = {
-      started: false,
-      calc: false,
-    };
+    const state = Init();
     const expected = {
+      ...state,
       started: false,
       calc: false,
+      error: null,
     };
     const stopAction = jest.fn();
 
@@ -31,35 +31,59 @@ describe('speech actions', () => {
     expect(stopAction).toHaveBeenCalledTimes(1);
   });
 
-  test('updateTranscript action', () => {
-    const state = {
-      transcripts: [{ text: 'first', reading: 4 }, { text: 'second' }],
+  test('addTimelineItem', () => {
+    const state = Init();
+    const expected1 = {
+      ...state,
+      timeline: [
+        {
+          type: 'speech',
+          text: '',
+          isFinal: false,
+        },
+      ],
     };
-    const transcript = { text: 'third', reading: 8 };
-    const expected = {
-      transcripts: [{ text: 'first', reading: 4 }, { ...transcript }],
-    };
+    expect(actions.addTimelineItem(state)).toEqual(expected1);
 
-    expect(actions.updateTranscript(state, transcript)).toEqual(expected);
+    const expected2 = {
+      ...expected1,
+      timeline: [
+        ...expected1.timeline,
+        {
+          type: 'error',
+          text: '',
+          isFinal: false,
+        },
+      ],
+    };
+    expect(actions.addTimelineItem(expected1, 'error')).toEqual(expected2);
   });
 
-  test('addTranscript', () => {
-    const state = {
-      transcripts: [
-        { text: 'first', reading: 4 },
-        { text: 'second', reading: 1 },
+  test('updateTimelineItem', () => {
+    const state = Init();
+    const item = {
+      type: 'speech',
+      text: '',
+      isFinal: false,
+    };
+    const expected1 = {
+      ...state,
+      timeline: [item],
+    };
+    const expected2 = {
+      ...expected1,
+      timeline: [
+        {
+          ...item,
+          text: 'text',
+          isFinal: true,
+        },
       ],
     };
-    const transcript = { text: 'third', reading: 8 };
-    const expected = {
-      transcripts: [
-        { text: 'first', reading: 4 },
-        { text: 'second', reading: 1 },
-        { ...transcript },
-      ],
-    };
-
-    expect(actions.addTranscript(state, transcript)).toEqual(expected);
+    expect(actions.updateTimelineItem(state, item)).toEqual(expected1);
+    expect(
+      actions.updateTimelineItem(expected1, { text: 'text', isFinal: true })
+    ).toEqual(expected2);
   });
 
   test('updateStatus', () => {
@@ -67,20 +91,6 @@ describe('speech actions', () => {
     const status = true;
     const expected = { status: true };
     expect(actions.updateStatus(state, status)).toEqual(expected);
-  });
-
-  test('stopSpeechRecognition', () => {
-    const state = {
-      transcripts: [{ text: 'first', isFinal: true }, { text: 'second' }],
-    };
-    const expected = {
-      transcripts: [
-        { text: 'first', isFinal: true },
-        { text: 'second', isFinal: true },
-      ],
-    };
-
-    expect(actions.stopSpeechRecognition(state)).toEqual(expected);
   });
 
   test('calcSpeed with empty timestamp', () => {

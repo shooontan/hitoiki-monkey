@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Init action 1`] = `
+Object {
+  "calc": false,
+  "enable": true,
+  "error": null,
+  "started": false,
+  "status": "",
+  "timeline": Array [],
+}
+`;

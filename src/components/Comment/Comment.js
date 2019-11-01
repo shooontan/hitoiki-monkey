@@ -3,13 +3,7 @@ import { h } from 'hyperapp';
 import DotDot from '~/components/DotDot';
 
 export default function Comment(props) {
-  const { enable, dictLoading, status, transcript, transcripts } = props;
-
-  // TODO
-  const listElm = document.getElementById('comment-list');
-  if (listElm) {
-    listElm.scrollTop = listElm.scrollHeight;
-  }
+  const { started, enable, error, timeline } = props;
 
   if (!enable) {
     return (
@@ -22,30 +16,21 @@ export default function Comment(props) {
     );
   }
 
-  if (dictLoading) {
-    return (
-      <div class="comment">
-        <div class="comment-loading">
-          Now Loading
-          <DotDot />
-        </div>
-      </div>
-    );
-  }
+  const rTimeline = [...timeline].reverse();
 
   return (
     <div class="comment">
       <ul id="comment-list" class="comment-list">
-        {transcripts.map((transcript, index) => (
+        {rTimeline.map((tl, index) => (
           <li
             class={{
               'comment-list-item': true,
-              none: !transcript.text,
+              none: !tl.text,
             }}
           >
             <div>
-              <span>{transcript.text}</span>
-              {!transcript.isFinal && <DotDot />}
+              <span>{tl.text}</span>
+              {!tl.isFinal && <DotDot />}
             </div>
           </li>
         ))}

@@ -1,13 +1,21 @@
 import SpeechRecognition from '~/libs/SpeechRecognition';
 import handler from '~/subscriptions/Handler';
 import * as actions from '~/actions/speech';
+import * as ErrorType from '~/constants/error';
+
+export const isActiveSpeech = state => {
+  if (!state.enable) return;
+  if (!state.started) return;
+  if (state.error && state.error !== ErrorType.ERROR_NO_SPEECH) return;
+  return true;
+};
 
 const SpeechEffect = (dispatch, props) => {
+  // for infinite loop
+  let loopKeeper = false;
+
   const startHandle = handler.addListener(SpeechRecognition, 'start', () => {
     console.log('onstart');
-    dispatch(props.addTranscript, {
-      text: '',
-    });
   });
 
   const soundstartHandler = handler.addListener(
@@ -23,7 +31,7 @@ const SpeechEffect = (dispatch, props) => {
     'speechstart',
     () => {
       console.log('onspeechstart');
-      dispatch(props.updateStatus, '認識開始');
+      dispatch(props.addTimelineItem);
     }
   );
 
@@ -32,17 +40,23 @@ const SpeechEffect = (dispatch, props) => {
     'result',
     event => {
       console.log('onresult');
-      const { results, resultIndex } = event;
-      dispatch(props.updateStatus, '認識中');
+      const { results, resultIndex, timeStamp } = event;
+
       for (let index = resultIndex; index < results.length; index++) {
         const result = results[index];
-        dispatch(props.tokenizeUpdateTranscript, {
+
+        dispatch(props.updateTimelineItem, {
           text: result[0].transcript,
-          isFinal: result.isFinal,
-          ts: event.timeStamp,
+          isFinal: false,
         });
 
         if (result.isFinal) {
+          // add stt result
+          dispatch(props.updateTimelineItem, {
+            text: result[0].transcript,
+            isFinal: result.isFinal,
+            ts: timeStamp,
+          });
           SpeechRecognition.stop();
         }
       }
@@ -67,13 +81,22 @@ const SpeechEffect = (dispatch, props) => {
 
   const endHandle = handler.addListener(SpeechRecognition, 'end', () => {
     console.log('onend');
-    dispatch(props.updateStatus, '認識完了');
+    // dispatch(props.updateStatus, '認識完了');
     SpeechRecognition.start();
   });
 
   const errorHandle = handler.addListener(SpeechRecognition, 'error', error => {
     const status = `onerror: ${error.error}`;
     console.log(error);
+
+    // add error to timeline
+    dispatch(props.updateTimeline, {
+      type: 'error',
+      text: status,
+      isFinal: true,
+    });
+
+    dispatch(props.setError, error.error);
     dispatch(props.updateStatus, status);
   });
 
@@ -87,7 +110,13 @@ const SpeechEffect = (dispatch, props) => {
     handler.removeListener(endHandle);
     handler.removeListener(errorHandle);
 
-    dispatch(props.stopSpeechRecognition);
+    // skip if dispatch had been done
+    if (!loopKeeper) {
+      loopKeeper = true;
+      dispatch(props.updateTimelineItem, {
+        isFinal: true,
+      });
+    }
   };
 };
 

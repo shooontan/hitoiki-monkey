@@ -1,7 +1,4 @@
-import { SpeechSub } from '~/subscriptions/SpeechSub';
-import { Time } from '~/subscriptions/TimeSub';
+import { Speech, SpeechSub, isActiveSpeech } from '~/subscriptions/SpeechSub';
+import { Time, interval } from '~/subscriptions/TimeSub';
 
-export default state => [
-  state.enable && state.dict && state.started && SpeechSub,
-  state.enable && state.calc && Time,
-];
+export default state => [isActiveSpeech(state) && SpeechSub];
