@@ -37,26 +37,34 @@ describe('speech actions', () => {
       ...state,
       timeline: [
         {
+          id: 'abc',
           type: 'speech',
           text: '',
           isFinal: false,
         },
       ],
     };
-    expect(actions.addTimelineItem(state)).toEqual(expected1);
+    expect(
+      actions.addTimelineItem(state, {
+        id: 'abc',
+      })
+    ).toEqual(expected1);
 
     const expected2 = {
       ...expected1,
       timeline: [
         ...expected1.timeline,
         {
+          id: 'xyz',
           type: 'error',
           text: '',
           isFinal: false,
         },
       ],
     };
-    expect(actions.addTimelineItem(expected1, 'error')).toEqual(expected2);
+    expect(
+      actions.addTimelineItem(expected1, { id: 'xyz', type: 'error' })
+    ).toEqual(expected2);
   });
 
   test('updateTimelineItem', () => {

@@ -1,3 +1,4 @@
+import nanoid from 'nanoid';
 import SpeechRecognition from '~/libs/SpeechRecognition';
 import handler from '~/subscriptions/Handler';
 import * as actions from '~/actions/speech';
@@ -31,7 +32,9 @@ const SpeechEffect = (dispatch, props) => {
     'speechstart',
     () => {
       console.log('onspeechstart');
-      dispatch(props.addTimelineItem);
+      dispatch(props.addTimelineItem, {
+        id: nanoid(10),
+      });
     }
   );
 

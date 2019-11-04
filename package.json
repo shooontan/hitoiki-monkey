@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "hyperapp": "2.0.3",
-    "ky": "^0.15.0"
+    "ky": "^0.15.0",
+    "nanoid": "^2.1.6"
   },
   "browserslist": [
     "last 2 Chrome version"

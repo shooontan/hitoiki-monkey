@@ -12,11 +12,12 @@ export const onStop = (state, stopAction = () => {}) => {
   return { ...state, started: false, calc: false, error: null };
 };
 
-export const addTimelineItem = (state, type = 'speech') => ({
+export const addTimelineItem = (state, { id = '', type = 'speech' }) => ({
   ...state,
   timeline: [
     ...state.timeline,
     {
+      id,
       type: type,
       text: '',
       isFinal: false,
@@ -29,6 +30,26 @@ export const updateTimelineItem = (state, item) => {
   return {
     ...state,
     timeline: [...state.timeline, { ...lastItem, ...item }],
+  };
+};
+
+export const setTextCount = (state, { id, count }) => {
+  const nextTimeline = [...state.timeline];
+
+  for (let index = 0; index < nextTimeline.length; index++) {
+    const item = nextTimeline[index];
+    if (item.id !== id) {
+      continue;
+    }
+
+    item['count'] = count;
+    nextTimeline[index] = item;
+    break;
+  }
+
+  return {
+    ...state,
+    timeline: nextTimeline,
   };
 };
 
